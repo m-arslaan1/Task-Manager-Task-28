@@ -1,16 +1,13 @@
 const Task = require("../models/taskModels.js");
 
 const createTask = async (req, res) => {
-  const { title, description } = req.body;
-  if (!title || !description) {
-    return res.status(400).json({ error: 'Title and description are required' });
-  }
   try {
+    const { title, description } = req.body;
     const newTask = new Task({ title, description });
     await newTask.save();
     res.status(201).json(newTask);
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    res.status(400).json({ message: "Error creating task", error: error });
   }
 };
 
