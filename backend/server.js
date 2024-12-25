@@ -27,7 +27,7 @@ app.use(cors({
 app.use("/api", taskRoutes);
 
 mongoose
-  .connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.DB_URI)
   .then(() => {
     console.log("Successfully connected to MongoDB");
   })
