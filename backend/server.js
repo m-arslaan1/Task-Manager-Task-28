@@ -10,7 +10,7 @@ const port = process.env.PORT || 4500;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
-const allowedOrigins = 'https://tasks-manager-0001.netlify.app';
+const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : ['http://localhost:5173', 'https://tasks-manager-0001.netlify.app'];
 
 app.use(cors({
   origin: function (origin, callback) {
