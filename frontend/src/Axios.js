@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4500';
+const API_URL = 'https://task-manager-task-28.onrender.com';
 
 export const getTasks = async () => {
   const response = await axios.get(`${API_URL}/api/tasks`);
