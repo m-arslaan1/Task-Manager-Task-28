@@ -64,7 +64,7 @@ Challenge 1: CORS Issues
 
 Problem: The frontend and backend servers are running on different ports, which can lead to CORS (Cross-Origin Resource Sharing) issues.
 
-Solution: We configured CORS in the backend server to allow requests from the frontend server. This was done using the cors middleware in Express:
+Solution: I configured CORS in the backend server to allow requests from the frontend server. This was done using the cors middleware in Express:
 ```sh
 app.use(cors({
   origin: 'https://task-manager-0001.netlify.app',
