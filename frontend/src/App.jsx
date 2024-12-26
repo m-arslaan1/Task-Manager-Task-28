@@ -142,15 +142,17 @@ function App() {
               <div>
                 <h2 className="text-xl font-bold">{task.title}</h2>
                 <p className="text-gray-700">{task.description}</p>
-                <p className={task.completed ? "text-green-600" : "text-red-600"}>
-                  {task.completed ? "Completed" : "Not Completed"}
-                </p>
-                <input
-                  type="checkbox"
-                  checked={task.completed}
-                  onChange={() => handleCheckboxChange(task._id)}
-                  className="mr-2"
-                />
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={task.completed}
+                    onChange={() => handleCheckboxChange(task._id)}
+                    className="mr-2"
+                  />
+                  <p className={task.completed ? "text-green-600" : "text-red-600"}>
+                    {task.completed ? "Completed" : "Not Completed"}
+                  </p>
+                </div>
                 <button
                   onClick={() => handleEditClick(task)}
                   className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mr-2 hover:bg-blue-700 transition duration-200"
