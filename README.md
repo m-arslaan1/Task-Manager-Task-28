@@ -85,5 +85,5 @@ Problem: Managing the state of tasks in the React frontend, especially when deal
 
 Solution: We used React's useState and useEffect hooks to manage the state of tasks. We also created helper functions in Axios.js to handle API requests for creating, reading, updating, and deleting tasks.
 
-Conclusion
+## Conclusion
 This project demonstrates a simple yet effective way to build a full-stack application using modern web development tools and practices. By addressing common challenges such as CORS issues and state management, we were able to create a seamless and integrated To-Do List application.
