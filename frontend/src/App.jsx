@@ -3,9 +3,9 @@ import { getTasks, createTask, updateTask, deleteTask } from "./Axios";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [task, setTask] = useState({ title: "", description: "" });
+  const [task, setTask] = useState({ title: "", description: "", completed: false });
   const [editTaskId, setEditTaskId] = useState(null);
-  const [editTask, setEditTask] = useState({ title: "", description: "" });
+  const [editTask, setEditTask] = useState({ title: "", description: "", completed: false });
 
   useEffect(() => {
     getTasks().then((response) => setTasks(response));
@@ -25,19 +25,29 @@ function App() {
     createTask(task)
       .then((response) => {
         setTasks([...tasks, response]);
-        setTask({ title: "", description: "" });
+        setTask({ title: "", description: "", completed: false });
       })
       .catch((error) => {
         console.error("Error creating task:", error);
       });
   };
 
+  const handleCheckboxChange = (taskId) => {
+    const updatedTasks = tasks.map((task) =>
+      task._id === taskId ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updatedTasks);
+    const taskToUpdate = updatedTasks.find((task) => task._id === taskId);
+    updateTask(taskId, taskToUpdate).catch((error) => {
+      console.error("Error updating task:", error);
+    });
+  };
+
   const handleUpdateTask = (id) => {
     const updatedTask = {
       ...tasks.find((t) => t._id === id),
       title: editTask.title || tasks.find((t) => t._id === id).title,
-      description:
-        editTask.description || tasks.find((t) => t._id === id).description,
+      description: editTask.description || tasks.find((t) => t._id === id).description,
     };
 
     updateTask(id, updatedTask)
@@ -45,7 +55,7 @@ function App() {
         const updatedTasks = tasks.map((t) => (t._id === id ? response : t));
         setTasks(updatedTasks);
         setEditTaskId(null); 
-        setEditTask({ title: "", description: "" }); 
+        setEditTask({ title: "", description: "", completed: false }); 
       })
       .catch((error) => {
         console.error("Error updating task:", error);
@@ -64,7 +74,7 @@ function App() {
 
   const handleEditClick = (task) => {
     setEditTaskId(task._id);
-    setEditTask({ title: task.title, description: task.description });
+    setEditTask({ title: task.title, description: task.description, completed: task.completed });
   };
 
   return (
@@ -132,11 +142,15 @@ function App() {
               <div>
                 <h2 className="text-xl font-bold">{task.title}</h2>
                 <p className="text-gray-700">{task.description}</p>
-                <p
-                  className={task.completed ? "text-green-600" : "text-red-600"}
-                >
+                <p className={task.completed ? "text-green-600" : "text-red-600"}>
                   {task.completed ? "Completed" : "Not Completed"}
                 </p>
+                <input
+                  type="checkbox"
+                  checked={task.completed}
+                  onChange={() => handleCheckboxChange(task._id)}
+                  className="mr-2"
+                />
                 <button
                   onClick={() => handleEditClick(task)}
                   className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mr-2 hover:bg-blue-700 transition duration-200"
